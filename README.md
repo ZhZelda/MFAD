@@ -1,10 +1,3 @@
-# Improved DeepFake Detection Using Whisper Features
-
-The following repository contains code for our paper called "Improved DeepFake Detection Using Whisper Features".
-
-The paper is available [here](https://www.isca-speech.org/archive/interspeech_2023/kawa23b_interspeech.html).
-
-
 ## Before you start
 
 ### Whisper
