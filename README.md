@@ -30,16 +30,8 @@ openai whisper (git+https://github.com/openai/whisper.git@7858aa9c08d98f75575035
 ### Supported models
 
 The following list concerns models and its names to select it supported by this repository:
-* SpecRNet - `specrnet`,
 * (Whisper) SpecRNet - `whisper_specrnet`,
 * (Whisper + LFCC/MFCC) SpecRNet - `whisper_frontend_specrnet`,
-* LCNN - `lcnn`,
-* (Whisper) LCNN - `whisper_lcnn`,
-* (Whisper + LFCC/MFCC) LCNN -`whisper_frontend_lcnn`,
-* MesoNet - `mesonet`,
-* (Whisper) MesoNet - `whisper_mesonet`,
-* (Whisper + LFCC/MFCC) MesoNet - `whisper_frontend_mesonet`,
-* RawNet3 - `rawnet3`.
 
 To select appropriate front-end please specify it in the config file.
 
