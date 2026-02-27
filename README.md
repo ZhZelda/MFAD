@@ -1,54 +1,58 @@
-## Before you start
+### 项目使用说明 (中文)
 
-### Whisper
-To download Whisper encoder used in training run `download_whisper.py`.
+#### 1. 准备工作
 
-### Datasets
+##### 1.1 Whisper
 
-Download appropriate datasets:
-* [ASVspoof2021 DF subset](https://zenodo.org/record/4835108) (**Please note:** we use this [keys&metadata file](https://www.asvspoof.org/resources/DF-keys-stage-1.tar.gz), directory structure is explained [here](https://github.com/piotrkawa/deepfake-whisper-features/issues/7#issuecomment-1830109945)),
-* [In-The-Wild dataset](https://deepfake-demo.aisec.fraunhofer.de/in_the_wild).
+要下载训练中使用的Whisper编码器，请运行 `download_whisper.py` 脚本。
 
+##### 1.2 数据集
 
+下载适当的数据集：
 
-### Dependencies
-Install required dependencies using (we assume you're using conda and the target env is active):
+* **ASVspoof2021 DF 子集**（请注意：我们使用的是此 `keys&metadata` 文件，目录结构请参见此文档）
+* **In-The-Wild 数据集**
+
+##### 1.3 安装依赖
+
+我们假设您正在使用conda，并且目标环境已经激活。安装所需的依赖项：
+
 ```bash
 bash install.sh
 ```
 
-List of requirements:
-```
-python=3.8
-pytorch==1.11.0
-torchaudio==0.11
-asteroid-filterbanks==0.4.0
-librosa==0.9.2
-openai whisper (git+https://github.com/openai/whisper.git@7858aa9c08d98f75575035ecd6481f462d66ca27)
-```
+以下是依赖项列表：
 
-### Supported models
+* python=3.8
+* pytorch==1.11.0
+* torchaudio==0.11
+* asteroid-filterbanks==0.4.0
+* librosa==0.9.2
+* openai whisper (git+[https://github.com/openai/whisper.git@7858aa9c08d98f75575035ecd6481f462d66ca27](https://github.com/openai/whisper.git@7858aa9c08d98f75575035ecd6481f462d66ca27))
 
-The following list concerns models and its names to select it supported by this repository:
-* (Whisper) SpecRNet - `whisper_specrnet`,
-* (Whisper + LFCC/MFCC) SpecRNet - `whisper_frontend_specrnet`,
+#### 2. 支持的模型
 
-To select appropriate front-end please specify it in the config file.
+以下是支持的模型及其名称：
 
-### Pretrained models
+* **Whisper**：SpecRNet - `whisper_specrnet`
+* **Whisper + LFCC/MFCC**：SpecRNet - `whisper_frontend_specrnet`
 
-All models reported in paper are available [here](https://drive.google.com/drive/folders/1YWMC64MW4HjGUX1fnBaMkMIGgAJde9Ch?usp=sharing).
+要选择适当的前端，请在配置文件中指定。
 
-### Configs
+#### 3. 预训练模型
 
-Both training and evaluation scripts are configured with the use of CLI and `.yaml` configuration files.
-e.g.:
+本文中报告的所有模型都可以从[此处](#)下载。
+
+#### 4. 配置文件
+
+训练和评估脚本使用CLI和`.yaml`配置文件进行配置。例如：
+
 ```yaml
 data:
   seed: 42
 
 checkpoint: 
-  path: "trained_models/lcnn/ckpt.pth",
+  path: "trained_models/lcnn/ckpt.pth"
 
 model:
   name: "lcnn"
@@ -60,25 +64,38 @@ model:
     weight_decay: 0.0001
 ```
 
-Other example configs are available under `configs/training/`.
+其他示例配置文件可在 `configs/training/` 文件夹下找到。
 
-## Full train and test pipeline 
+#### 5. 完整的训练和测试管道
 
-To perform full pipeline of training and testing please use `train_and_test.py` script.
+要执行完整的训练和测试流程，请使用 `train_and_test.py` 脚本。
 
-```
+```bash
 usage: train_and_test.py [-h] [--asv_path ASV_PATH] [--in_the_wild_path IN_THE_WILD_PATH] [--config CONFIG] [--train_amount TRAIN_AMOUNT] [--test_amount TEST_AMOUNT] [--batch_size BATCH_SIZE] [--epochs EPOCHS] [--ckpt CKPT] [--cpu]
 
-Arguments: 
-    --asv_path          Path to the ASVSpoof2021 DF root dir
-    --in_the_wild_path  Path to the In-The-Wild root dir
-    --config            Path to the config file
-    --train_amount      Number of samples to train on (default: 100000)
-    --valid_amount      Number of samples to validate on (default: 25000)
-    --test_amount       Number of samples to test on (default: None - all)
-    --batch_size        Batch size (default: 8)
-    --epochs            Number of epochs (default: 10)
-    --ckpt              Path to saved models (default: 'trained_models')
-    --cpu               Force using CPU
+参数:
+  --asv_path          ASVSpoof2021 DF 根目录路径
+  --in_the_wild_path  In-The-Wild 根目录路径
+  --config            配置文件路径
+  --train_amount      训练样本数量（默认：100000）
+  --valid_amount      验证样本数量（默认：25000）
+  --test_amount       测试样本数量（默认：None - 所有样本）
+  --batch_size        批量大小（默认：8）
+  --epochs            训练轮次（默认：10）
+  --ckpt              保存模型路径（默认：'trained_models'）
+  --cpu               强制使用CPU
 ```
 
+#### 6. 训练流程
+
+使用配置文件指定训练和测试的路径以及相关参数。以下是启动训练的示例命令：
+
+```bash
+python train_and_test.py --asv_path /path/to/ASVspoof2021/ --in_the_wild_path /path/to/InTheWild/ --config /path/to/config.yaml
+```
+
+#### 7. 常见问题
+
+* **Whisper下载问题**：确保您在运行 `download_whisper.py` 脚本时有足够的网络带宽和磁盘空间。
+* **数据集下载问题**：请确保您已正确下载并解压了ASVspoof2021 DF和In-The-Wild数据集。
+* **训练问题**：如果遇到GPU显存不足问题，可以尝试降低批量大小或使用CPU进行训练。
